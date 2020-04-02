@@ -1,0 +1,101 @@
+version: '2.1'
+services:
+  jobmanager1:
+    image: myflink:1.9
+    container_name : jobmanager-container1
+    expose:
+      - "6123"
+      - "8081"
+    ports:
+      - "8084:8081"
+    command: jobmanager
+    network_mode: "blue"
+    
+  taskmanager1:
+    image: myflink:1.9
+    container_name : taskmanager-container1
+    expose:
+      - "6121"
+      - "6122"
+    depends_on:
+      - jobmanager1
+    command: taskmanager
+    network_mode: "blue"
+
+  jobmanager2:
+    image: myflink:1.9
+    container_name : jobmanager-container2
+    expose:
+      - "6123"
+      - "8081"
+    ports:
+      - "8085:8081"
+    command: jobmanager
+    network_mode: "blue"
+
+  taskmanager2:
+    image: myflink:1.9
+    container_name : taskmanager-container2
+    expose:
+      - "6121"
+      - "6122"
+    depends_on:
+      - jobmanager2
+    command: taskmanager
+    network_mode: "blue"
+
+  jobmanager3:
+    image: myflink:1.9
+    container_name : jobmanager-container3
+    expose:
+      - "6123"
+      - "8081"
+    ports:
+      - "8086:8081"
+    command: jobmanager
+    network_mode: "blue"
+
+  taskmanager3:
+    image: myflink:1.9
+    container_name : taskmanager-container3
+    expose:
+      - "6121"
+      - "6122"
+    depends_on:
+      - jobmanager3
+    command: taskmanager
+    network_mode: "blue"
+
+  zookeeper:
+    image: zookeeper:3.4.14
+    restart: always
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+       - ZOO_SERVERS=server.0=0.0.0.0:2888:3888
+    network_mode: "blue"
+
+  minio:
+    image: minio/minio:RELEASE.2019-10-02T21-19-38Z
+    ports:
+      - "9000:9000"
+    environment:
+      - MINIO_ACCESS_KEY=minioaccesskey
+      - MINIO_SECRET_KEY=miniosecretkey
+    command: "server /data"
+    network_mode: "blue"
+
+  minioclient:
+    image: minio/mc:RELEASE.2019-10-09T22-54-57Z
+    depends_on:
+      - minio
+    network_mode: "blue"
+    entrypoint: >
+      /bin/sh -c "
+      sleep 10;
+      /usr/bin/mc config host add myminio http://minio:9000 minioaccesskey miniosecretkey;
+      /usr/bin/mc mb myminio/state;
+      /usr/bin/mc mb myminio/highavailability;
+      exit 0;
+      "
