@@ -30,7 +30,7 @@
 # automatically configure the host name based on the hostname of the node where the
 # JobManager runs.
 
-jobmanager.rpc.address: localhost 
+jobmanager.rpc.address: d2089db49550
 
 # The RPC port where the JobManager is reachable.
 
@@ -70,7 +70,7 @@ parallelism.default: 1
 
 # The high-availability mode. Possible options are 'NONE' or 'zookeeper'.
 #
-# high-availability: zookeeper
+high-availability: zookeeper
 
 # The path where metadata for master recovery is persisted. While ZooKeeper stores
 # the small ground truth for checkpoint and leader election, this location stores
@@ -79,13 +79,13 @@ parallelism.default: 1
 # Must be a durable file system that is accessible from all nodes
 # (like HDFS, S3, Ceph, nfs, ...)
 #
-#high-availability.storageDir: s3://flink/highavailability
+high-availability.storageDir: s3://${MINIO_BUCKET}
 
 # The list of ZooKeeper quorum peers that coordinate the high-availability
 # setup. This must be a list of the form:
 # "host1:clientPort,host2:clientPort,..." (default clientPort: 2181)
 #
-#high-availability.zookeeper.quorum: zookeeper:2181
+high-availability.zookeeper.quorum: zookeeper:2181
 
 
 # ACL options are based on https://zookeeper.apache.org/doc/r3.1.2/zookeeperProgrammers.html#sc_BuiltinACLSchemes
@@ -104,16 +104,16 @@ parallelism.default: 1
 # Supported backends are 'jobmanager', 'filesystem', 'rocksdb', or the
 # <class-name-of-factory>.
 #
-#state.backend: filesystem
+state.backend: filesystem
 
 # Directory for checkpoints filesystem, when using any of the default bundled
 # state backends.
 #
-#state.checkpoints.dir: s3://state/checkpoints
+state.checkpoints.dir: s3://state/checkpoints
 
 # Default target directory for savepoints, optional.
 #
-#state.savepoints.dir: s3://state/savepoints
+state.savepoints.dir: s3://state/savepoints
 
 # Flag to enable/disable incremental checkpoints for backends that
 # support incremental checkpoints (like the RocksDB state backend).
@@ -264,10 +264,10 @@ query.server.port: 6125
 # S3 Endpoint Configuration
 #==============================================================================
 
-#s3.access-key: minioaccesskey
-#s3.secret-key: miniosecretkey
+s3.access-key: minioaccesskey
+s3.secret-key: miniosecretkey
 
 # Note that before flink 1.8, path-style-access only works with numeric IP addresses.
 # https://issues.apache.org/jira/browse/FLINK-10817
-#s3.path-style-access: true
-#s3.endpoint: http://minio:9000
+s3.path-style-access: true
+s3.endpoint: http://minio:9000

@@ -6,6 +6,9 @@ services:
     expose:
       - "6123"
       - "8081"
+    environment:
+            #- JOB_MANAGER_RPC_ADDRESS=jobmanager1
+      - "FLINK_PROPERTIES=high-availability: zookeeper\nhigh-availability: zookeeper\nhigh-availability.storageDir: s3://flink/highavailability\nhigh-availability.zookeeper.quorum: zookeeper:2181\nstate.backend: filesystem\nstate.checkpoints.dir: s3://state/checkpoints\nstate.savepoints.dir: s3://state/savepoints\n#==============================================================================\n# S3 Endpoint Configuration\n#==============================================================================\ns3.access-key: minioaccesskey\ns3.secret-key: miniosecretkey\n# Note that before flink 1.8, path-style-access only works with numeric IP addresses.\n# https://issues.apache.org/jira/browse/FLINK-10817\ns3.path-style-access: true\ns3.endpoint: http://minio:9000"
     ports:
       - "8084:8081"
     command: jobmanager
@@ -17,6 +20,9 @@ services:
     expose:
       - "6121"
       - "6122"
+    environment:
+        #      - JOB_MANAGER_RPC_ADDRESS=jobmanager1
+      - "FLINK_PROPERTIES=high-availability: zookeeper\nhigh-availability: zookeeper\nhigh-availability.storageDir: s3://flink/highavailability\nhigh-availability.zookeeper.quorum: zookeeper:2181\nstate.backend: filesystem\nstate.checkpoints.dir: s3://state/checkpoints\nstate.savepoints.dir: s3://state/savepoints\n#==============================================================================\n# S3 Endpoint Configuration\n#==============================================================================\ns3.access-key: minioaccesskey\ns3.secret-key: miniosecretkey\n# Note that before flink 1.8, path-style-access only works with numeric IP addresses.\n# https://issues.apache.org/jira/browse/FLINK-10817\ns3.path-style-access: true\ns3.endpoint: http://minio:9000"
     depends_on:
       - jobmanager1
     command: taskmanager
@@ -30,6 +36,9 @@ services:
       - "8081"
     ports:
       - "8085:8081"
+    environment:
+            #- JOB_MANAGER_RPC_ADDRESS=jobmanager2
+      - "FLINK_PROPERTIES=high-availability: zookeeper\nhigh-availability: zookeeper\nhigh-availability.storageDir: s3://flink/highavailability\nhigh-availability.zookeeper.quorum: zookeeper:2181\nstate.backend: filesystem\nstate.checkpoints.dir: s3://state/checkpoints\nstate.savepoints.dir: s3://state/savepoints\n#==============================================================================\n# S3 Endpoint Configuration\n#==============================================================================\ns3.access-key: minioaccesskey\ns3.secret-key: miniosecretkey\n# Note that before flink 1.8, path-style-access only works with numeric IP addresses.\n# https://issues.apache.org/jira/browse/FLINK-10817\ns3.path-style-access: true\ns3.endpoint: http://minio:9000"
     command: jobmanager
     network_mode: "blue"
 
@@ -39,6 +48,9 @@ services:
     expose:
       - "6121"
       - "6122"
+    environment:
+      - "FLINK_PROPERTIES=high-availability: zookeeper\nhigh-availability: zookeeper\nhigh-availability.storageDir: s3://flink/highavailability\nhigh-availability.zookeeper.quorum: zookeeper:2181\nstate.backend: filesystem\nstate.checkpoints.dir: s3://state/checkpoints\nstate.savepoints.dir: s3://state/savepoints\n#==============================================================================\n# S3 Endpoint Configuration\n#==============================================================================\ns3.access-key: minioaccesskey\ns3.secret-key: miniosecretkey\n# Note that before flink 1.8, path-style-access only works with numeric IP addresses.\n# https://issues.apache.org/jira/browse/FLINK-10817\ns3.path-style-access: true\ns3.endpoint: http://minio:9000"
+            #      - JOB_MANAGER_RPC_ADDRESS=jobmanager2
     depends_on:
       - jobmanager2
     command: taskmanager
@@ -50,6 +62,9 @@ services:
     expose:
       - "6123"
       - "8081"
+    environment:
+            #- JOB_MANAGER_RPC_ADDRESS=jobmanager3
+      - "FLINK_PROPERTIES=high-availability: zookeeper\nhigh-availability: zookeeper\nhigh-availability.storageDir: s3://flink/highavailability\nhigh-availability.zookeeper.quorum: zookeeper:2181\nstate.backend: filesystem\nstate.checkpoints.dir: s3://state/checkpoints\nstate.savepoints.dir: s3://state/savepoints\n#==============================================================================\n# S3 Endpoint Configuration\n#==============================================================================\ns3.access-key: minioaccesskey\ns3.secret-key: miniosecretkey\n# Note that before flink 1.8, path-style-access only works with numeric IP addresses.\n# https://issues.apache.org/jira/browse/FLINK-10817\ns3.path-style-access: true\ns3.endpoint: http://minio:9000"
     ports:
       - "8086:8081"
     command: jobmanager
@@ -61,6 +76,9 @@ services:
     expose:
       - "6121"
       - "6122"
+    environment:
+#      - JOB_MANAGER_RPC_ADDRESS=jobmanager3
+      - "FLINK_PROPERTIES=high-availability: zookeeper\nhigh-availability: zookeeper\nhigh-availability.storageDir: s3://flink/highavailability\nhigh-availability.zookeeper.quorum: zookeeper:2181\nstate.backend: filesystem\nstate.checkpoints.dir: s3://state/checkpoints\nstate.savepoints.dir: s3://state/savepoints\n#==============================================================================\n# S3 Endpoint Configuration\n#==============================================================================\ns3.access-key: minioaccesskey\ns3.secret-key: miniosecretkey\n# Note that before flink 1.8, path-style-access only works with numeric IP addresses.\n# https://issues.apache.org/jira/browse/FLINK-10817\ns3.path-style-access: true\ns3.endpoint: http://minio:9000"
     depends_on:
       - jobmanager3
     command: taskmanager
